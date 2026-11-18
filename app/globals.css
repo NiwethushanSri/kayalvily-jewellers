@@ -247,6 +247,38 @@ section { padding: 56px 0; }
   .ratebar-inner { gap: 6px 14px; }
   .rate-source { display: none; }
 }
+.mobile-menu { display: none; }
+@media (max-width: 1024px) {
+  .nav-desktop { display: none; }
+  .mobile-menu { display: block; }
+  .mobile-menu summary {
+    list-style: none; cursor: pointer; padding: 10px 12px; border: 1.5px solid var(--gold);
+    display: inline-flex; align-items: center; justify-content: center; line-height: 0;
+    border-radius: 999px; color: var(--gold); font-weight: 600; font-size: 14px; text-align: center;
+  }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 20px; height: 14px; }
+  .burger i { display: block; height: 2px; width: 100%; background: var(--gold); border-radius: 2px; }
+  .mobile-menu[open] .burger { display: none; }
+  .mobile-nav {
+    position: fixed; top: 0; right: 0; height: 100vh; width: min(80vw, 300px); z-index: 60;
+    background: #fff; box-shadow: -8px 0 28px rgba(0,0,0,0.18); padding: 76px 0 24px;
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  .mobile-nav a {
+    padding: 14px 24px; border-bottom: 1px solid var(--line); text-decoration: none;
+    text-transform: uppercase; font-size: 14px; font-weight: 500; color: var(--ink);
+  }
+  .mobile-nav a:active, .mobile-nav a:hover { color: var(--gold); }
+  .header-inner { justify-content: space-between; flex-wrap: nowrap; min-height: 0; gap: 12px; }
+  .logo-img { height: 56px; }
+  /* While open, the Menu button floats above the panel and reads "Close" */
+  .mobile-menu[open] > summary {
+    position: fixed; top: 14px; right: 14px; z-index: 70; font-size: 0; padding: 9px 22px;
+    background: #fff;
+  }
+  .mobile-menu[open] > summary::after { content: "Close"; font-size: 14px; }
+}
 .developed-by { text-align: center; font-size: 13px; opacity: 0.8; margin: 10px 0 0; letter-spacing: 0.4px; }
 .footer .social-row { margin-bottom: 8px; }
 
