@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <g fill="none" stroke="#b8860b" stroke-width="1.2" opacity="0.16">
+    <!-- diamond motif -->
+    <path d="M40 22 L52 40 L40 58 L28 40 Z"/>
+    <path d="M40 30 L46 40 L40 50 L34 40 Z"/>
+    <!-- interlocking scrolls -->
+    <path d="M110 18 C124 18 132 30 124 40 C116 50 98 46 102 34 C104 26 112 26 114 32"/>
+    <path d="M118 112 C104 112 96 124 104 134 C112 144 130 140 126 128 C124 120 116 120 114 126"/>
+    <!-- small sparkle -->
+    <path d="M142 90 L144 96 L150 98 L144 100 L142 106 L140 100 L134 98 L140 96 Z"/>
+    <path d="M22 110 L24 116 L30 118 L24 120 L22 126 L20 120 L14 118 L20 116 Z"/>
+    <!-- dots -->
+    <circle cx="80" cy="80" r="2"/>
+    <circle cx="8" cy="8" r="1.5"/>
+    <circle cx="152" cy="152" r="1.5"/>
+  </g>
+</svg>
