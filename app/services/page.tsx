@@ -29,7 +29,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="features">
+      <section className="services-section">
         <div className="container">
           <div className="feature-list services-grid">
             {services.map((s) => (
@@ -47,8 +47,8 @@ export default function ServicesPage() {
         <div className="container cta-band">
           <h2>Ready to start?</h2>
           <p>Send us a message on WhatsApp or visit the shop in {site.address.town}.</p>
-          <a className="btn whatsapp" href={whatsappLink(site.phones.whatsappLK, "Hello, I would like to enquire about your services.")} target="_blank" rel="noopener noreferrer">
-            WhatsApp us
+          <a className="btn" href={whatsappLink(site.phones.whatsappLK, "Hello, I would like to enquire about your services.")} target="_blank" rel="noopener noreferrer">
+            Message us on WhatsApp
           </a>
         </div>
       </section>

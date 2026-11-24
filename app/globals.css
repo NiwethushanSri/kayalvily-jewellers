@@ -525,3 +525,112 @@ section { padding: 56px 0; }
   .home-features .feature-list { grid-template-columns: 1fr; }
   .home-features .feature + .feature { border-left: 0; }
 }
+
+/* The same travelling band of light as the shop name, falling only on the gold in the hero photo */
+.hero-art::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, rgba(255, 246, 205, 0) 40%, rgba(255, 246, 205, 0.85) 50%, rgba(255, 246, 205, 0) 60%);
+  background-size: 300% 100%; background-position: 100% 0;
+  -webkit-mask: url("/hero-gold-mask.webp") center / 100% 100% no-repeat; mask: url("/hero-gold-mask.webp") center / 100% 100% no-repeat;
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art::after { animation: script-shine 3.8s ease-in-out 0.9s infinite; }
+}
+
+/* ---------- Inner pages: the home page's look carried through ---------- */
+.breadcrumb { font-size: 13px; letter-spacing: 0.3px; padding-top: 22px; }
+.breadcrumb a:hover { color: var(--maroon); }
+
+/* Page heading used by Collections, Services, Contact, Terms and Privacy */
+.about-hero { padding: 34px 0 44px; }
+.about-hero h1 {
+  font-size: clamp(34px, 5vw, 58px); font-weight: 300; letter-spacing: -0.015em; line-height: 1.1;
+  margin: 6px 0 0; padding-bottom: 20px; position: relative; text-wrap: balance;
+}
+.about-hero h1::after {
+  content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 56px; height: 3px; background: var(--gold); border-radius: 2px;
+}
+.about-hero p { margin: 20px auto 0; max-width: 58ch; font-size: 17px; }
+
+/* About */
+.about-top { min-height: 520px; }
+.about-top .breadcrumb { padding-top: 0; margin-bottom: 28px; }
+.story { gap: 56px; }
+.story-text h2 {
+  font-size: clamp(28px, 3.4vw, 40px); font-weight: 300; line-height: 1.15; letter-spacing: -0.01em;
+  margin: 0 0 22px; padding-bottom: 18px; position: relative; text-wrap: balance;
+}
+.story-text h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 56px; height: 3px; background: var(--gold); border-radius: 2px; }
+.story-text p { font-size: 17px; color: #4a3b2e; max-width: 60ch; margin: 0 0 16px; }
+.story-photos { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; align-items: end; }
+.story-photos img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 6px; box-shadow: 0 14px 34px rgba(107, 30, 46, 0.16); }
+.story-photos img:last-child { margin-bottom: 44px; }
+
+.visit-band {
+  background: var(--maroon); color: #f6e7c1; border-radius: 8px; padding: 40px 44px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap;
+  box-shadow: 0 14px 34px rgba(107, 30, 46, 0.18);
+}
+.visit-band h2 { margin: 0 0 8px; font-size: clamp(26px, 3vw, 36px); font-weight: 300; color: #fff; }
+.visit-band p { margin: 0; line-height: 1.6; }
+.visit-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.visit-band .btn, .cta-band .btn { background: #fff7e6; border-color: #fff7e6; color: var(--maroon); font-weight: 600; box-shadow: none; }
+.visit-band .btn.outline { background: transparent; color: #fff7e6; border-color: rgba(255, 247, 230, 0.6); }
+.visit-band .btn.outline:hover { background: #fff7e6; color: var(--maroon); }
+
+.social-block .social-row { gap: 12px; }
+.social-chip {
+  display: inline-flex; align-items: center; gap: 10px; padding: 11px 22px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: #fff; color: var(--maroon); font-weight: 500;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.social-chip:hover { border-color: var(--maroon); transform: translateY(-2px); }
+.social-chip svg { width: 18px; height: 18px; }
+
+/* Services */
+.services-section { padding: 20px 0 72px; }
+.services-grid { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; }
+.service-card {
+  text-align: left; padding: 30px 28px; box-shadow: 0 6px 22px rgba(107, 30, 46, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.service-card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(107, 30, 46, 0.14); }
+.service-card .feature-icon { margin: 0 0 18px; width: 56px; height: 56px; }
+.service-card h4 { margin: 0 0 8px; font-size: 19px; font-weight: 500; }
+.service-card p { margin: 0; line-height: 1.6; }
+.cta-band { background: var(--maroon); border: 0; padding: 52px 24px; box-shadow: 0 14px 34px rgba(107, 30, 46, 0.18); }
+.cta-band h2 { color: #fff; font-weight: 300; font-size: clamp(28px, 3.4vw, 40px); }
+.cta-band p { color: #f3e3c4; margin-bottom: 14px; }
+
+/* Collections */
+.shop-filter { position: sticky; top: 132px; border: 1px solid var(--line); border-radius: 8px; padding: 18px 14px; }
+.shop-filter h3 { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin: 0 12px 10px; }
+.filter-row { padding: 9px 12px; border-radius: 6px; margin: 2px 0; transition: background 0.15s ease, color 0.15s ease; }
+.filter-row:hover { background: #fdf8ea; color: var(--maroon); font-weight: 400; }
+.filter-row.active { background: #fbf1d8; color: var(--maroon); font-weight: 600; }
+.shop-head h2 { font-weight: 300; font-size: clamp(26px, 3vw, 36px); }
+.shop-card .btn.whatsapp { background: transparent; border-color: var(--maroon); color: var(--maroon); box-shadow: none; font-weight: 600; }
+.shop-card .btn.whatsapp:hover { background: var(--maroon); color: #fff7e6; }
+.offers-empty { padding: 48px 24px; border-radius: 8px; }
+.offers-empty p { margin-bottom: 20px; font-size: 16px; }
+.offers-empty .btn { background: var(--maroon); border-color: var(--maroon); color: #fff7e6; font-weight: 600; }
+@media (max-width: 760px) {
+  /* Categories become a row of chips you can swipe */
+  .shop-filter { position: static; display: flex; gap: 8px; overflow-x: auto; padding: 10px; }
+  .shop-filter h3 { display: none; }
+  .filter-row { white-space: nowrap; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; margin: 0; }
+}
+
+/* Terms and Privacy: two flowing columns so short and long sections sit neatly */
+.terms-grid { display: block; columns: 2; column-gap: 22px; }
+.terms-card { break-inside: avoid; margin: 0 0 22px; padding: 26px 28px; }
+.terms-card h2 { font-size: 19px; font-weight: 500; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.terms-card li { line-height: 1.6; color: #4a3b2e; }
+.terms-card li::marker { color: var(--gold); }
+@media (max-width: 760px) {
+  .terms-grid { columns: 1; }
+  .visit-band { padding: 30px 24px; }
+  .story-photos img:last-child { margin-bottom: 28px; }
+}

@@ -22,12 +22,12 @@ export const site = {
   goldRate: { karat22: "TBC", karat24: "TBC", currency: "LKR", unit: "g" },
   // Main menu, mirrors the reference site's category order
   nav: [
-    { href: "/collection#gold", label: "Gold Jewellery" },
-    { href: "/collection#diamond", label: "Diamond Jewellery" },
-    { href: "/collection#lightweight", label: "Light Weight Collection" },
-    { href: "/collection#featured", label: "Featured Collection" },
-    { href: "/collection#mens", label: "Mens Collection" },
-    { href: "/collection#offers", label: "Offers" },
+    { href: "/collection?cat=gold", label: "Gold Jewellery" },
+    { href: "/collection?cat=diamond", label: "Diamond Jewellery" },
+    { href: "/collection?cat=lightweight", label: "Light Weight Collection" },
+    { href: "/collection?cat=featured", label: "Featured Collection" },
+    { href: "/collection?cat=mens", label: "Mens Collection" },
+    { href: "/collection?cat=offers", label: "Offers" },
     { href: "/about", label: "About" },
   ],
   footerNav: [

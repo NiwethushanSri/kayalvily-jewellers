@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 import MobileMenu from "@/components/MobileMenu";
+import NavLinks from "@/components/NavLinks";
 
 export default function Header() {
   return (
@@ -16,11 +17,7 @@ export default function Header() {
 
           {/* Desktop menu */}
           <nav className="nav nav-desktop" aria-label="Main">
-            {site.nav.map((item) => (
-              <Link key={item.href} href={item.href} aria-current={item.href.startsWith("/about") ? "page" : undefined}>
-                {item.label}
-              </Link>
-            ))}
+            <NavLinks />
           </nav>
 
           {/* Phone menu */}

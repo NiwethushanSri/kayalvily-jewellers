@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
+import HeroArt from "@/components/HeroArt";
 import { productGroups } from "@/lib/products";
 
 const categories = [
@@ -16,14 +17,6 @@ const categories = [
   // A photo from the matching section (the first unless "pick" says otherwise), or undefined for a plain tile
   image: productGroups.find((g) => g.id === c.group)?.items[c.pick ?? 0]?.image,
 }));
-
-// Glints of light on the jewellery in the hero photo.
-// [left %, top %, delay s, cycle s, size, tilt deg]. Mixed cycle lengths keep them from flashing in step.
-const sparkles: [number, number, number, number, number, number][] = [
-  [19.5, 33, 0.0, 4.3, 1.0, 12], [14.5, 50, 1.7, 5.9, 0.7, -8], [17.5, 61, 0.9, 5.1, 1.2, 20], [23, 63, 2.6, 6.7, 0.8, 5],
-  [50.5, 30, 1.2, 5.3, 0.9, -15], [46, 47, 2.9, 4.7, 0.7, 10], [50.5, 58, 0.4, 6.1, 1.3, 0], [49, 78, 2.1, 5.5, 1.0, 25], [62.5, 86, 3.3, 7.1, 0.8, -10],
-  [74, 13, 0.7, 6.3, 0.8, 18], [84, 21, 2.4, 4.9, 0.7, -5], [82, 31, 1.5, 5.7, 1.1, 8], [81.5, 47, 3.0, 4.1, 1.3, -20], [81, 58, 0.2, 6.9, 1.0, 15], [84, 80, 1.9, 5.2, 0.8, 0],
-];
 
 export default function HomePage() {
   return (
@@ -42,25 +35,7 @@ export default function HomePage() {
             </a>
           </div>
         </div>
-        <div className="hero-art">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/hero.webp" alt="Models wearing South Indian silk sarees and gold jewellery" />
-          {sparkles.map(([x, y, delay, cycle, size, tilt]) => (
-            <span
-              key={`${x}-${y}`}
-              className="sparkle"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                animationDelay: `${delay}s`,
-                animationDuration: `${(cycle * 0.6).toFixed(2)}s`,
-                ["--k" as string]: size,
-                rotate: `${tilt}deg`,
-              }}
-              aria-hidden="true"
-            />
-          ))}
-        </div>
+        <HeroArt />
       </section>
 
       <section className="home-section">
@@ -69,7 +44,7 @@ export default function HomePage() {
           <p className="section-sub">Browse our range of gold, diamond and bridal jewellery.</p>
           <div className="tiles">
             {categories.map((c) => (
-              <Link className={c.image ? "tile" : "tile tile-plain"} href={`/collection#${c.group}`} key={c.title}>
+              <Link className={c.image ? "tile" : "tile tile-plain"} href={`/collection?cat=${c.group}`} key={c.title}>
                 {c.image && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={c.image} alt="" loading="lazy" />

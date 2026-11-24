@@ -1,32 +1,45 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { mapQuery, site } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
+import HeroArt from "@/components/HeroArt";
+import SocialIcon from "@/components/SocialIcon";
+import { productGroups } from "@/lib/products";
 
 export const metadata: Metadata = { title: `About Us | ${site.name}` };
+
+// Two photos beside the story: a bridal piece and a diamond piece.
+const storyPhotos = [
+  productGroups.find((g) => g.id === "featured")?.items[2]?.image,
+  productGroups.find((g) => g.id === "diamond")?.items[0]?.image,
+].filter((src): src is string => Boolean(src));
+
+// Until the founding year is filled in (lib/site.ts), the first block avoids showing the placeholder.
+const sinceTitle = site.since.startsWith("[") ? "Rooted in Kilinochchi" : `Since ${site.since}`;
+
+const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`;
 
 export default function AboutPage() {
   return (
     <>
       {/* Hero: full-width band with the model photo on the right */}
-      <section className="photo-hero">
-        <nav className="breadcrumb container" aria-label="Breadcrumb">
-          <Link href="/">Home</Link> &gt;&gt; <span>About Us</span>
-        </nav>
+      <section className="photo-hero home-hero about-top">
         <div className="container">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Home</Link> &gt; <span>About Us</span>
+          </nav>
           <h1>A Heritage Worth</h1>
           <span className="script">Celebrating</span>
           <p>From a trusted name in Kilinochchi, {site.name} celebrates life&apos;s milestones with jewellery crafted with care, beauty and lasting value.</p>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/hero.webp" alt="Models wearing South Indian silk sarees and gold jewellery" className="hero-figure" />
+        <HeroArt />
       </section>
 
       {/* Story */}
-      <section>
+      <section className="home-section">
         <div className="container story">
-          <div>
+          <div className="story-text">
             <h2>The Story Behind the Sparkle</h2>
             <p>
               In the heart of Kilinochchi, on Kanagapuram Road opposite the main market, {site.name} has become
@@ -40,19 +53,21 @@ export default function AboutPage() {
               for someone special, we take the time to help you find a piece you will treasure for years.
             </p>
           </div>
-          <div className="story-images">
-            <div className="placeholder-img tall">Photo coming soon</div>
-            <div className="placeholder-img">Photo coming soon</div>
+          <div className="story-photos">
+            {storyPhotos.map((src) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={src} src={src} alt="" loading="lazy" />
+            ))}
           </div>
         </div>
       </section>
 
       {/* Trust */}
-      <section className="features">
+      <section className="features home-section home-features">
         <div className="container">
           <h2 className="section-title">Trust Beyond Every Purchase</h2>
           <div className="feature-list four">
-            <div className="feature"><FeatureIcon name="calendar" /><h4>Since {site.since}</h4><p>Serving customers in Kilinochchi.</p></div>
+            <div className="feature"><FeatureIcon name="calendar" /><h4>{sinceTitle}</h4><p>Serving customers in Kilinochchi.</p></div>
             <div className="feature"><FeatureIcon name="shield" /><h4>Trusted Heritage</h4><p>Genuine jewellery and honest pricing.</p></div>
             <div className="feature"><FeatureIcon name="gem" /><h4>Skilled Craftsmanship</h4><p>Careful work in every design.</p></div>
             <div className="feature"><FeatureIcon name="heart" /><h4>Enduring Relationships</h4><p>Families who return for every milestone.</p></div>
@@ -60,30 +75,36 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Locations */}
-      <section>
+      {/* Location */}
+      <section className="home-section">
         <div className="container">
-          <h2 className="section-title">Our Location</h2>
-          <div className="location-grid">
-            <div className="card location-card">
-              <h3>Kilinochchi, Sri Lanka</h3>
-              <p>{site.address.line1}, {site.address.line2}</p>
-              <p>{site.address.town}, {site.address.country}</p>
-              <a className="btn outline" href="https://www.google.com/maps/search/?api=1&query=Kayalvily+Jewellers+Kilinochchi" target="_blank" rel="noopener noreferrer">
-                Get Directions
-              </a>
+          <div className="visit-band">
+            <div>
+              <h2>Our Location</h2>
+              <p>
+                {site.address.line1}, {site.address.line2}
+                <br />
+                {site.address.town}, {site.address.country}
+              </p>
+            </div>
+            <div className="visit-actions">
+              <a className="btn" href={directions} target="_blank" rel="noopener noreferrer">Get Directions</a>
+              <Link className="btn outline" href="/contact">Contact Us</Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* Social */}
-      <section className="social-block">
+      <section className="social-block home-section">
         <div className="container">
           <h2 className="section-title">Stay Updated with Our Latest Collections</h2>
           <div className="social-row">
             {site.social.map((s) => (
-              <a key={s.label} className="btn outline" href={s.href}>{s.label}</a>
+              <a key={s.label} className="social-chip" href={s.href}>
+                <SocialIcon name={s.label} />
+                {s.label}
+              </a>
             ))}
           </div>
         </div>

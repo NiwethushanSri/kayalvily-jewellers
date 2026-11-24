@@ -51,7 +51,7 @@ export default async function CollectionPage({
               <span>{active.items.length} Results</span>
             </div>
             {active.items.length === 0 ? (
-              <div className="card">
+              <div className="card offers-empty">
                 <p>New offers coming soon. Message us on WhatsApp to ask about current offers.</p>
                 <a className="btn whatsapp" href={whatsappLink(site.phones.whatsappLK, "Hello, I would like to ask about current offers.")} target="_blank" rel="noopener noreferrer">
                   Ask about offers
