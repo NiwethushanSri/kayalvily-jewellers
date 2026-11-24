@@ -98,12 +98,20 @@ export default function AboutPage() {
         <div className="container">
           <h2 className="section-title">Stay Updated with Our Latest Collections</h2>
           <div className="social-row">
-            {site.social.map((s) => (
-              <a key={s.label} className="social-chip" href={s.href}>
-                <SocialIcon name={s.label} />
-                {s.label}
-              </a>
-            ))}
+            {site.social.map((s) =>
+              // No link yet: show the name but leave it unclickable
+              s.href === "#" ? (
+                <span key={s.label} className="social-chip social-off" title={`${s.label} (coming soon)`}>
+                  <SocialIcon name={s.label} />
+                  {s.label}
+                </span>
+              ) : (
+                <a key={s.label} className="social-chip" href={s.href} target="_blank" rel="noopener noreferrer">
+                  <SocialIcon name={s.label} />
+                  {s.label}
+                </a>
+              ),
+            )}
           </div>
         </div>
       </section>

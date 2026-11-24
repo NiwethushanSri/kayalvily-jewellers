@@ -10,11 +10,18 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="social-row">
-          {site.social.map((s) => (
-            <a key={s.label} href={s.href} aria-label={s.label} title={s.label}>
-              <SocialIcon name={s.label} />
-            </a>
-          ))}
+          {site.social.map((s) =>
+            // No link yet: show the logo but leave it unclickable
+            s.href === "#" ? (
+              <span key={s.label} className="social-off" role="img" aria-label={s.label} title={`${s.label} (coming soon)`}>
+                <SocialIcon name={s.label} />
+              </span>
+            ) : (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label}>
+                <SocialIcon name={s.label} />
+              </a>
+            ),
+          )}
         </div>
         <nav className="footer-nav" aria-label="Footer">
           {site.footerNav.map((item) => (
