@@ -1,3 +1,4 @@
+// Designed and Developed by Forge9x Ltd
 // Product photos downloaded from the Devi category pages, grouped by section.
 // Names are design codes. Prices show as "Price on enquiry" until you send them.
 export type Product = { image: string; name: string };

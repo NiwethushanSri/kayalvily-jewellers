@@ -1,3 +1,4 @@
+// Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/lib/site";

@@ -1,3 +1,4 @@
+// Designed and Developed by Forge9x Ltd
 // Daily gold rate for the top bar.
 // Source: Central Bank of Sri Lanka, Daily Gold Rates (XAU per troy ounce, in LKR).
 // https://www.cbsl.gov.lk/en/rates-and-indicators/exchange-rates/daily-gold-rates

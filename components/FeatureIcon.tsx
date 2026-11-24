@@ -1,3 +1,4 @@
+// Designed and Developed by Forge9x Ltd
 // Simple gold line icons for the feature blocks. Each is drawn on a 24x24 grid.
 type IconName = "calendar" | "shield" | "gem" | "heart" | "chat";
 

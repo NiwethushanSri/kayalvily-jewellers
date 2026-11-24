@@ -4,3 +4,6 @@ out/
 .env*.local
 *.log
 next-env.d.ts
+.vercel
+.env*
+*.tsbuildinfo

@@ -1,3 +1,4 @@
+// Designed and Developed by Forge9x Ltd
 // Single source of truth for business details. Edit here, the whole site updates.
 export const site = {
   name: "Kayalvily Jewellers",
@@ -41,6 +42,14 @@ export const site = {
     { href: "#", label: "TikTok" },
   ],
 };
+
+// "+94775792414" reads better as "+94 77 579 2414". Numbers in another shape are shown as stored.
+export function spacedPhone(phone: string) {
+  return phone.replace(/^(\+94)(\d{2})(\d{3})(\d{4})$/, "$1 $2 $3 $4");
+}
+
+// What the map and the "Get directions" button search for. Replace with the shop's exact Google Maps pin when known.
+export const mapQuery = `${site.name}, ${site.address.line1}, ${site.address.town}, ${site.address.country}`;
 
 export function whatsappLink(number: string, message = "Hello, I would like to enquire about your jewellery.") {
   return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
