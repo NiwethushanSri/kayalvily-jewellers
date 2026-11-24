@@ -5,7 +5,7 @@ export const site = {
   shortName: "Kayalvily",
   tagline: "Gold, diamond and bridal jewellery crafted with care",
   owner: "Samiththampy Supramaniyam",
-  since: "[Year]", // Placeholder: replace with the year the business started
+  since: "2020", // The year the business started
   address: {
     line1: "Kanagapuram Road",
     line2: "In front of Kilinochchi Main Market",
