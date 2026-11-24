@@ -1,19 +1,19 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite, mapQueryOf } from "@/lib/content";
 import Link from "next/link";
-import { mapQuery, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
 import HeroArt from "@/components/HeroArt";
 import SocialIcon from "@/components/SocialIcon";
 
 export const metadata: Metadata = { title: `About Us | ${site.name}` };
 
-// Until the founding year is filled in (lib/site.ts), the first block avoids showing the placeholder.
-const sinceTitle = site.since.startsWith("[") ? "Rooted in Kilinochchi" : `Since ${site.since}`;
-
-const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`;
-
-export default function AboutPage() {
+export default async function AboutPage() {
+  const site = await getSite();
+  // Until a founding year is set, the first trust block avoids showing a placeholder.
+  const sinceTitle = site.since.startsWith("[") ? "Rooted in Kilinochchi" : `Since ${site.since}`;
+  const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQueryOf(site))}`;
   return (
     <>
       {/* Hero: full-width band with the model photo on the right */}
@@ -49,10 +49,8 @@ export default function AboutPage() {
           <figure className="shop-photo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/shop.webp"
+              src={site.images.shop ?? "/shop.webp"}
               alt={`The ${site.name} shop front on ${site.address.line1}, ${site.address.town}`}
-              width={1400}
-              height={1060}
               loading="lazy"
             />
             <figcaption>Our shop on {site.address.line1}, {site.address.town}</figcaption>

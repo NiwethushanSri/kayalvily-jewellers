@@ -1,5 +1,6 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite } from "@/lib/content";
 import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import { productGroups } from "@/lib/products";
@@ -18,6 +19,7 @@ export default async function CollectionPage({
   const { cat } = await searchParams;
   const active = allGroups.find((g) => g.id === cat) ?? allGroups[0];
 
+  const site = await getSite();
   return (
     <>
       <nav className="breadcrumb container" aria-label="Breadcrumb">

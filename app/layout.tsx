@@ -1,5 +1,6 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite } from "@/lib/content";
 import "./globals.css";
 import { site, whatsappLink } from "@/lib/site";
 import { getGoldRates } from "@/lib/goldRate";
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const rates = await getGoldRates();
+  const site = await getSite();
   return (
     <html lang="en">
       <head>

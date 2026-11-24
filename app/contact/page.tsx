@@ -1,13 +1,10 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite, mapQueryOf } from "@/lib/content";
 import Link from "next/link";
-import { mapQuery, site, spacedPhone, whatsappLink } from "@/lib/site";
+import { site, spacedPhone, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = { title: `Contact | ${site.name}` };
-
-const q = encodeURIComponent(mapQuery);
-const mapEmbed = `https://www.google.com/maps?q=${q}&z=16&output=embed`;
-const directions = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
 
 const stroke = {
   viewBox: "0 0 24 24",
@@ -19,7 +16,11 @@ const stroke = {
   "aria-hidden": true,
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await getSite();
+  const q = encodeURIComponent(mapQueryOf(site));
+  const mapEmbed = `https://www.google.com/maps?q=${q}&z=16&output=embed`;
+  const directions = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
   return (
     <>
       <nav className="breadcrumb container" aria-label="Breadcrumb">

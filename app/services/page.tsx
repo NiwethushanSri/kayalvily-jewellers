@@ -1,5 +1,6 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite } from "@/lib/content";
 import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
@@ -16,7 +17,8 @@ const services = [
   { icon: "gem" as const, title: "Diamond Advice", text: "Guidance on diamond quality and choosing the right stone for your budget." },
 ];
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const site = await getSite();
   return (
     <>
       <nav className="breadcrumb container" aria-label="Breadcrumb">

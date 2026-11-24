@@ -1,11 +1,13 @@
 // Designed and Developed by Forge9x Ltd
 import Link from "next/link";
+import { getSite } from "@/lib/content";
 import { site, spacedPhone, whatsappLink } from "@/lib/site";
 import SocialIcon from "@/components/SocialIcon";
 
 const spaced = spacedPhone;
 
-export default function Footer() {
+export default async function Footer() {
+  const site = await getSite();
   return (
     <footer className="footer">
       <div className="container">

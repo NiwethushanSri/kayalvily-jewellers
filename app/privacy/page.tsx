@@ -1,5 +1,6 @@
 // Designed and Developed by Forge9x Ltd
 import type { Metadata } from "next";
+import { getSite, type Site } from "@/lib/content";
 import Link from "next/link";
 import { site } from "@/lib/site";
 
@@ -8,7 +9,7 @@ export const metadata: Metadata = { title: `Privacy & Cookies | ${site.name}` };
 type Section = { title: string; points: string[] };
 
 // Describes what the website does today. Update it if forms, analytics or adverts are added.
-const sections: Section[] = [
+const buildSections = (site: Site): Section[] => [
   {
     title: "1. Who We Are",
     points: [
@@ -76,7 +77,9 @@ const sections: Section[] = [
   },
 ];
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const site = await getSite();
+  const sections = buildSections(site);
   return (
     <>
       <nav className="breadcrumb container" aria-label="Breadcrumb">

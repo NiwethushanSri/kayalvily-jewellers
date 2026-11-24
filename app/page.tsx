@@ -1,5 +1,6 @@
 // Designed and Developed by Forge9x Ltd
 import Link from "next/link";
+import { getSite, type SlotId } from "@/lib/content";
 import { site, whatsappLink } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
 import HeroArt from "@/components/HeroArt";
@@ -18,7 +19,8 @@ const categories = [
   image: productGroups.find((g) => g.id === c.group)?.items[c.pick ?? 0]?.image,
 }));
 
-export default function HomePage() {
+export default async function HomePage() {
+  const site = await getSite();
   return (
     <>
       <section className="photo-hero home-hero">
@@ -43,7 +45,9 @@ export default function HomePage() {
           <h2 className="section-title">Our Collections</h2>
           <p className="section-sub">Browse our range of gold, diamond and bridal jewellery.</p>
           <div className="tiles">
-            {categories.map((c) => (
+            {categories
+              .map((c) => ({ ...c, image: site.images[`tile-${c.group}` as SlotId] ?? c.image }))
+              .map((c) => (
               <Link className={c.image ? "tile" : "tile tile-plain"} href={`/collection?cat=${c.group}`} key={c.title}>
                 {c.image && (
                   // eslint-disable-next-line @next/next/no-img-element
