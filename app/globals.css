@@ -634,3 +634,8 @@ section { padding: 56px 0; }
   .visit-band { padding: 30px 24px; }
   .story-photos img:last-child { margin-bottom: 28px; }
 }
+
+/* About: the shop front beside the story */
+.shop-photo { margin: 0; }
+.shop-photo img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 14px 34px rgba(107, 30, 46, 0.18); }
+.shop-photo figcaption { margin-top: 12px; font-size: 14px; color: var(--muted); text-align: center; }

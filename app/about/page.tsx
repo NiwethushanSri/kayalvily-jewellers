@@ -5,15 +5,8 @@ import { mapQuery, site } from "@/lib/site";
 import FeatureIcon from "@/components/FeatureIcon";
 import HeroArt from "@/components/HeroArt";
 import SocialIcon from "@/components/SocialIcon";
-import { productGroups } from "@/lib/products";
 
 export const metadata: Metadata = { title: `About Us | ${site.name}` };
-
-// Two photos beside the story: a bridal piece and a diamond piece.
-const storyPhotos = [
-  productGroups.find((g) => g.id === "featured")?.items[2]?.image,
-  productGroups.find((g) => g.id === "diamond")?.items[0]?.image,
-].filter((src): src is string => Boolean(src));
 
 // Until the founding year is filled in (lib/site.ts), the first block avoids showing the placeholder.
 const sinceTitle = site.since.startsWith("[") ? "Rooted in Kilinochchi" : `Since ${site.since}`;
@@ -53,12 +46,17 @@ export default function AboutPage() {
               for someone special, we take the time to help you find a piece you will treasure for years.
             </p>
           </div>
-          <div className="story-photos">
-            {storyPhotos.map((src) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={src} src={src} alt="" loading="lazy" />
-            ))}
-          </div>
+          <figure className="shop-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/shop.webp"
+              alt={`The ${site.name} shop front on ${site.address.line1}, ${site.address.town}`}
+              width={1400}
+              height={1060}
+              loading="lazy"
+            />
+            <figcaption>Our shop on {site.address.line1}, {site.address.town}</figcaption>
+          </figure>
         </div>
       </section>
 
