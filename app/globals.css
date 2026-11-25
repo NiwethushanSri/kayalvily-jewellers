@@ -288,9 +288,9 @@ section { padding: 56px 0; }
   .image-banner { height: 180px; }
   .hero { padding: 56px 0; }
   .section-title { font-size: 26px; }
-  .header-inner { flex-wrap: wrap; justify-content: center; min-height: 0; gap: 12px; }
+  .header-inner { flex-wrap: nowrap; justify-content: space-between; min-height: 0; gap: 12px; }
   .nav { gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .logo-img { height: 64px; }
+  .logo-img { height: 56px; }
   .ratebar-inner { justify-content: center; font-size: 13px; }
 }
 
