@@ -687,3 +687,17 @@ section { padding: 56px 0; }
 .admin-photo .admin-help { margin: 0; }
 .admin-photo form { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .admin-photo input[type="file"] { font: inherit; font-size: 13px; max-width: 100%; }
+
+/* /admin: page wording and photo sizes */
+.admin textarea {
+  width: 100%; padding: 11px 12px; font: inherit; line-height: 1.5; color: var(--ink); background: #fffdf8;
+  border: 1px solid #cdbb93; border-radius: 6px; resize: vertical;
+}
+.admin textarea:focus-visible { outline: 2px solid var(--maroon); outline-offset: 1px; border-color: var(--maroon); }
+.admin-page-text { border-top: 1px solid var(--line); }
+.admin-page-text:last-child { border-bottom: 1px solid var(--line); }
+.admin-page-text > summary { cursor: pointer; padding: 14px 2px; font-size: 17px; font-weight: 600; color: var(--maroon); }
+.admin-page-text > summary:focus-visible { outline: 2px solid var(--maroon); outline-offset: 2px; }
+.admin-page-text[open] > summary { margin-bottom: 8px; }
+.admin-page-text form { padding-bottom: 22px; }
+.admin-size { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }

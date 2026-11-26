@@ -7,18 +7,12 @@ import FeatureIcon from "@/components/FeatureIcon";
 
 export const metadata: Metadata = { title: `Services | ${site.name}` };
 
-// Suggested services. Please confirm or edit this list before publishing.
-const services = [
-  { icon: "gem" as const, title: "Custom Jewellery Design", text: "Bring your idea and we will craft a piece to your design, in gold or with diamonds." },
-  { icon: "heart" as const, title: "Bridal Sets", text: "Complete bridal jewellery for your wedding day, chosen with you in the shop." },
-  { icon: "calendar" as const, title: "Gifts for Milestones", text: "Gold gifts for birthdays, anniversaries, weddings and other special occasions." },
-  { icon: "shield" as const, title: "Repairs and Resizing", text: "Repairs, polishing and resizing for gold pieces, done with care." },
-  { icon: "chat" as const, title: "Old Gold Exchange", text: "Exchange your old gold towards a new piece, priced at the day's gold rate." },
-  { icon: "gem" as const, title: "Diamond Advice", text: "Guidance on diamond quality and choosing the right stone for your budget." },
-];
+// The icon for each of the six services; their wording comes from /admin (lib/texts.ts).
+const icons = ["gem", "heart", "calendar", "shield", "chat", "gem"] as const;
 
 export default async function ServicesPage() {
   const site = await getSite();
+  const services = icons.map((icon, i) => ({ icon, title: site.t[`service-${i + 1}-title`], text: site.t[`service-${i + 1}-text`] }));
   return (
     <>
       <nav className="breadcrumb container" aria-label="Breadcrumb">
@@ -26,8 +20,8 @@ export default async function ServicesPage() {
       </nav>
       <section className="about-hero">
         <div className="container">
-          <h1>Our Services</h1>
-          <p>From custom designs to everyday repairs, we help you find jewellery that marks the moments that matter.</p>
+          <h1>{site.t["services-title"]}</h1>
+          <p>{site.t["services-intro"]}</p>
         </div>
       </section>
 
@@ -35,7 +29,7 @@ export default async function ServicesPage() {
         <div className="container">
           <div className="feature-list services-grid">
             {services.map((s) => (
-              <div className="feature service-card" key={s.title}>
+              <div className="feature service-card" key={s.icon + s.title}>
                 <FeatureIcon name={s.icon} />
                 <h4>{s.title}</h4>
                 <p>{s.text}</p>
@@ -47,8 +41,8 @@ export default async function ServicesPage() {
 
       <section>
         <div className="container cta-band">
-          <h2>Ready to start?</h2>
-          <p>Send us a message on WhatsApp or visit the shop in {site.address.town}.</p>
+          <h2>{site.t["services-cta-title"]}</h2>
+          <p>{site.t["services-cta-text"]}</p>
           <a className="btn" href={whatsappLink(site.phones.whatsappLK, "Hello, I would like to enquire about your services.")} target="_blank" rel="noopener noreferrer">
             Message us on WhatsApp
           </a>

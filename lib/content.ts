@@ -5,6 +5,7 @@
 import { del, list, put } from "@vercel/blob";
 import { unstable_cache } from "next/cache";
 import { site as baseSite } from "@/lib/site";
+import { TEXT_FIELDS } from "@/lib/texts";
 
 export const CONTENT_TAG = "site-content";
 const SETTINGS_PREFIX = "content/settings";
@@ -14,14 +15,15 @@ export const IMAGE_SLOTS = [
     id: "hero",
     label: "Main photo (home and About)",
     fallback: "/hero.webp",
+    size: "1536 × 1024 px",
     hint: "Use a cut-out picture with a transparent background (PNG or WebP). The jewellery shine only runs on the original photo.",
   },
-  { id: "shop", label: "Shop photo (About)", fallback: "/shop.webp", hint: "A landscape photo works best." },
-  { id: "tile-gold", label: "Gold Jewellery tile (home)", fallback: "", hint: "" },
-  { id: "tile-diamond", label: "Diamond Jewellery tile (home)", fallback: "", hint: "" },
-  { id: "tile-featured", label: "Bridal Collection tile (home)", fallback: "", hint: "" },
-  { id: "tile-lightweight", label: "Lightweight Collection tile (home)", fallback: "", hint: "" },
-  { id: "tile-mens", label: "Men's Collection tile (home)", fallback: "", hint: "" },
+  { id: "shop", label: "Shop photo (About)", fallback: "/shop.webp", size: "1400 × 1060 px", hint: "A landscape photo works best." },
+  { id: "tile-gold", label: "Gold Jewellery tile (home)", fallback: "", size: "1200 × 1000 px", hint: "This is the large tile. The edges are cropped to fit." },
+  { id: "tile-diamond", label: "Diamond Jewellery tile (home)", fallback: "", size: "800 × 800 px", hint: "Square. The edges are cropped to fit." },
+  { id: "tile-featured", label: "Bridal Collection tile (home)", fallback: "", size: "800 × 800 px", hint: "Square. The edges are cropped to fit." },
+  { id: "tile-lightweight", label: "Lightweight Collection tile (home)", fallback: "", size: "800 × 800 px", hint: "Square. The edges are cropped to fit." },
+  { id: "tile-mens", label: "Men's Collection tile (home)", fallback: "", size: "800 × 800 px", hint: "Square. The edges are cropped to fit." },
 ] as const;
 
 export type SlotId = (typeof IMAGE_SLOTS)[number]["id"];
@@ -50,11 +52,15 @@ export type Content = {
   details: Partial<Record<DetailId, string>>;
   social: Partial<Record<SocialId, string>>;
   images: Partial<Record<SlotId, string>>;
+  text: Record<string, string>; // page wording, keyed by the ids in lib/texts.ts
 };
 
-const empty = (): Content => ({ details: {}, social: {}, images: {} });
+const empty = (): Content => ({ details: {}, social: {}, images: {}, text: {} });
 
 export const storageReady = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+// Wording is plain text: no control characters, and runs of spaces or line breaks become one space.
+export const cleanText = (v: string) => v.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\s+/g, " ").trim();
 
 // Keep only known keys with string values, so a damaged or hand-edited file cannot inject anything else.
 function normalise(raw: unknown): Content {
@@ -72,6 +78,10 @@ function normalise(raw: unknown): Content {
   for (const s of IMAGE_SLOTS) {
     const v = r.images?.[s.id];
     if (typeof v === "string" && /^https:\/\/[a-z0-9.-]+\.blob\.vercel-storage\.com\//.test(v)) out.images[s.id] = v;
+  }
+  for (const f of TEXT_FIELDS) {
+    const v = r.text?.[f.id];
+    if (typeof v === "string" && v.trim()) out.text[f.id] = cleanText(v).slice(0, f.max);
   }
   return out;
 }
@@ -153,16 +163,26 @@ export function cleanUsername(input: string) {
 export async function getSite() {
   const c = await getContent();
   const d = c.details;
+  const tagline = d.tagline ?? baseSite.tagline;
+  const owner = d.owner ?? baseSite.owner;
+  const town = d.town ?? baseSite.address.town;
+  // {name}, {town}, {owner} and {tagline} in the wording are filled in from the shop details.
+  const tokens: Record<string, string> = { name: baseSite.name, town, owner, tagline };
+  const t: Record<string, string> = {};
+  for (const f of TEXT_FIELDS) {
+    t[f.id] = (c.text?.[f.id] ?? f.def).replace(/\{(name|town|owner|tagline)\}/g, (_, k: string) => tokens[k]);
+  }
   return {
     ...baseSite,
-    tagline: d.tagline ?? baseSite.tagline,
-    owner: d.owner ?? baseSite.owner,
+    t,
+    tagline,
+    owner,
     since: d.since ?? baseSite.since,
     address: {
       ...baseSite.address,
       line1: d.addressLine1 ?? baseSite.address.line1,
       line2: d.addressLine2 ?? baseSite.address.line2,
-      town: d.town ?? baseSite.address.town,
+      town,
     },
     phones: {
       ...baseSite.phones,

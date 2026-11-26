@@ -4,8 +4,10 @@ import Link from "next/link";
 import { adminConfigured, isAdmin } from "@/lib/adminAuth";
 import { DETAIL_FIELDS, IMAGE_SLOTS, SOCIAL_FIELDS, readContentFresh, storageReady } from "@/lib/content";
 import { productGroups } from "@/lib/products";
+import { TEXT_GROUPS } from "@/lib/texts";
+import AdminPhoto from "@/components/AdminPhoto";
 import { site } from "@/lib/site";
-import { resetImage, saveDetails, saveSocial, signIn, signOut, uploadImage } from "./actions";
+import { resetImage, saveDetails, saveSocial, saveText, signIn, signOut, uploadImage } from "./actions";
 
 export const metadata: Metadata = { title: `Admin | ${site.name}`, robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -96,17 +98,46 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
         <form action={saveSocial} className="admin-card">
           <h2>Social media</h2>
-          <p className="admin-help">Type the username only, for example kayalvilyjewellers. A network left empty shows its logo but is not clickable.</p>
+          <p className="admin-help">Type the username (for example kayalvilyjewellers) or paste the full profile link. A network left empty shows its logo but is not clickable.</p>
           <div className="admin-fields">
             {SOCIAL_FIELDS.map((f) => (
               <div key={f.id}>
-                <label htmlFor={f.id}>{f.label} username</label>
-                <input id={f.id} name={f.id} defaultValue={content.social[f.id] ?? ""} maxLength={60} autoCapitalize="none" spellCheck={false} />
+                <label htmlFor={f.id}>{f.label} username or link</label>
+                <input id={f.id} name={f.id} defaultValue={content.social[f.id] ?? ""} maxLength={200} autoCapitalize="none" spellCheck={false} />
               </div>
             ))}
           </div>
           <button className="btn" type="submit">Save social media</button>
         </form>
+
+        <div className="admin-card">
+          <h2>Page wording</h2>
+          <p className="admin-help">
+            Open a page, change the wording and save. Empty a box to go back to the original wording. You can
+            write {"{name}"}, {"{town}"}, {"{owner}"} or {"{tagline}"} and the shop details are filled in for you.
+          </p>
+          {TEXT_GROUPS.map((group) => (
+            <details className="admin-page-text" id={`text-${group.id}`} key={group.id}>
+              <summary>{group.label}</summary>
+              <form action={saveText}>
+                <input type="hidden" name="group" value={group.id} />
+                <div className="admin-fields">
+                  {group.fields.map((f) => (
+                    <div key={f.id} className={f.long ? "wide" : undefined}>
+                      <label htmlFor={f.id}>{f.label}</label>
+                      {f.long ? (
+                        <textarea id={f.id} name={f.id} defaultValue={content.text[f.id] ?? f.def} maxLength={f.max} rows={f.max > 250 ? 5 : 2} />
+                      ) : (
+                        <input id={f.id} name={f.id} defaultValue={content.text[f.id] ?? f.def} maxLength={f.max} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <button className="btn" type="submit">Save {group.label.toLowerCase()} wording</button>
+              </form>
+            </details>
+          ))}
+        </div>
 
         <div className="admin-card">
           <h2>Photos</h2>
@@ -116,9 +147,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               const custom = content.images[slot.id];
               return (
                 <div className="admin-photo" key={slot.id}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={custom ?? original(slot)} alt="" loading="lazy" />
                   <h3>{slot.label}</h3>
+                  <AdminPhoto src={custom ?? original(slot)} />
+                  <p className="admin-size">Best size: {slot.size} or larger, same shape</p>
                   <p className="admin-help">{custom ? "Showing your uploaded photo." : "Showing the original photo."} {slot.hint}</p>
                   <form action={uploadImage}>
                     <input type="hidden" name="slot" value={slot.id} />

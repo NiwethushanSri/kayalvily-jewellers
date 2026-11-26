@@ -8,6 +8,7 @@ import {
   CONTENT_TAG,
   DETAIL_FIELDS,
   SOCIAL_FIELDS,
+  cleanText,
   cleanUsername,
   isSlotId,
   readContentFresh,
@@ -16,6 +17,7 @@ import {
   storageReady,
   storeImage,
 } from "@/lib/content";
+import { TEXT_GROUPS } from "@/lib/texts";
 
 const back = (query: string): never => redirect(`/admin?${query}`);
 
@@ -84,6 +86,25 @@ export async function saveSocial(form: FormData) {
   await saveContent(content);
   publish();
   back("saved=" + encodeURIComponent("Social media saved."));
+}
+
+// Saves the wording of one page. An empty box goes back to the built-in wording.
+export async function saveText(form: FormData) {
+  await guard();
+  const group = TEXT_GROUPS.find((g) => g.id === form.get("group"));
+  if (!group) return back("error=" + encodeURIComponent("Unknown page."));
+  const content = await readContentFresh();
+  for (const f of group.fields) {
+    const value = cleanText(String(form.get(f.id) ?? ""));
+    if (value.length > f.max) {
+      back("error=" + encodeURIComponent(`${group.label}, "${f.label}" is too long (${f.max} characters at most).`) + `#text-${group.id}`);
+    }
+    if (value && value !== f.def) content.text[f.id] = value;
+    else delete content.text[f.id];
+  }
+  await saveContent(content);
+  publish();
+  back("saved=" + encodeURIComponent(`${group.label} wording saved.`) + `#text-${group.id}`);
 }
 
 export async function uploadImage(form: FormData) {

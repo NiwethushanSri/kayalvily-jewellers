@@ -28,8 +28,8 @@ export default async function HomePage() {
           <span className="script">
             Kayalvily Jewellers
           </span>
-          <h1>Gold, Diamond &amp; Bridal</h1>
-          <p>{site.tagline}. Visit us in front of the main market in {site.address.town}.</p>
+          <h1>{site.t["home-heading"]}</h1>
+          <p>{site.t["home-intro"]}</p>
           <div className="cta">
             <Link className="btn" href="/collection">View Collections</Link>
             <a className="btn whatsapp" href={whatsappLink(site.phones.whatsappLK)} target="_blank" rel="noopener noreferrer">
@@ -42,13 +42,18 @@ export default async function HomePage() {
 
       <section className="home-section">
         <div className="container">
-          <h2 className="section-title">Our Collections</h2>
-          <p className="section-sub">Browse our range of gold, diamond and bridal jewellery.</p>
+          <h2 className="section-title">{site.t["collections-title"]}</h2>
+          <p className="section-sub">{site.t["collections-intro"]}</p>
           <div className="tiles">
             {categories
-              .map((c) => ({ ...c, image: site.images[`tile-${c.group}` as SlotId] ?? c.image }))
+              .map((c) => ({
+                ...c,
+                title: site.t[`tile-${c.group}-title`],
+                text: site.t[`tile-${c.group}-text`],
+                image: site.images[`tile-${c.group}` as SlotId] ?? c.image,
+              }))
               .map((c) => (
-              <Link className={c.image ? "tile" : "tile tile-plain"} href={`/collection?cat=${c.group}`} key={c.title}>
+              <Link className={c.image ? "tile" : "tile tile-plain"} href={`/collection?cat=${c.group}`} key={c.group}>
                 {c.image && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={c.image} alt="" loading="lazy" />
@@ -65,12 +70,12 @@ export default async function HomePage() {
 
       <section className="features home-section home-features">
         <div className="container">
-          <h2 className="section-title">Why Choose Us</h2>
+          <h2 className="section-title">{site.t["why-title"]}</h2>
           <div className="feature-list">
-            <div className="feature"><FeatureIcon name="shield" /><h4>Trusted Quality</h4><p>Genuine gold and certified stones.</p></div>
-            <div className="feature"><FeatureIcon name="gem" /><h4>Skilled Craftsmanship</h4><p>Designs made by experienced artisans.</p></div>
-            <div className="feature"><FeatureIcon name="heart" /><h4>Personal Service</h4><p>Friendly help to find the right piece.</p></div>
-            <div className="feature"><FeatureIcon name="chat" /><h4>Easy Enquiries</h4><p>Reach us by phone or WhatsApp any time.</p></div>
+            <div className="feature"><FeatureIcon name="shield" /><h4>{site.t["why-1-title"]}</h4><p>{site.t["why-1-text"]}</p></div>
+            <div className="feature"><FeatureIcon name="gem" /><h4>{site.t["why-2-title"]}</h4><p>{site.t["why-2-text"]}</p></div>
+            <div className="feature"><FeatureIcon name="heart" /><h4>{site.t["why-3-title"]}</h4><p>{site.t["why-3-text"]}</p></div>
+            <div className="feature"><FeatureIcon name="chat" /><h4>{site.t["why-4-title"]}</h4><p>{site.t["why-4-text"]}</p></div>
           </div>
         </div>
       </section>
